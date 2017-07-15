@@ -1,0 +1,50 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <script language="javascript" type="text/javascript"
+            src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<div class="chat_container">
+    <div class="form">
+        <button id="connect">Войти в чат</button>
+        <button id="disconnect">Выйти из чата</button>
+        <br/>
+        <input type="text" id="message" value=""/>
+        <button id="send" onclick="sendMessage(
+            document.getElementById('message')
+        )">Отправить</button>
+        <br/>
+        <textarea id="statusOutput" rows="lO" cols="SO"></textarea>
+        <p>Чат</p>
+        <textarea id="messageOutput" rows="lO" cols="SO"></textarea>
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    jQuery(function ($) {
+        var token;
+
+        function writeStatus(message) {
+            $("#statusOutput").val($("#statusOutput").val() + message + '\n');
+        }
+
+        function writeMessage(message) {
+            $('#messageOutput').append(message + '\n');
+        }
+
+        $('#disconnect')
+            .click(function () {
+                if (typeof websocket != 'undefined') {
+                    websocket.close();
+                    websocket = undefined;
+                } else {
+                    alert("Not connected.");
+                }
+            });
+    });
+</script>
+</body>
+</html>
+
