@@ -13,10 +13,8 @@ function sendMessage(chatId, message) {
     })
 }
 
-function doConnect() {
-    // создается объект websocket
+function connect() {
     websocket = new WebSocket("ws://localhost:8080/authHandler");
-    // при подключении написать CONNECTED
     websocket.onopen = function (evt) {
         var token = getCookie("Auth-Token");
         if (typeof websocket !== 'undefined') {
@@ -38,4 +36,11 @@ function doConnect() {
     websocket.onerror = function (evt) {
         onError(writeStatus('ERROR:' + evt.data))
     }
+}
+
+function getCookie(name) {
+    var matches = document.cookie.match(new RegExp(
+        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
 }

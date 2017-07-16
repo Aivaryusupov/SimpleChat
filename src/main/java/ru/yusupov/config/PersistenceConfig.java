@@ -28,7 +28,7 @@ public class PersistenceConfig {
 
         localContainerEntityManagerFactoryBean.setDataSource(dataSource());
         localContainerEntityManagerFactoryBean.setJpaVendorAdapter(hibernateJpaVendorAdapter());
-        localContainerEntityManagerFactoryBean.setPackagesToScan("ru.yusupov.model");
+        localContainerEntityManagerFactoryBean.setPackagesToScan("ru.yusupov.models");
         return localContainerEntityManagerFactoryBean;
     }
 
@@ -45,7 +45,7 @@ public class PersistenceConfig {
     DataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
         driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
-        driverManagerDataSource.setUrl("jdbc:postgresql://localhost:5432/users_data");
+        driverManagerDataSource.setUrl("jdbc:postgresql://localhost:5432/postgres");
         driverManagerDataSource.setPassword("1234");
         driverManagerDataSource.setUsername("postgres");
         return driverManagerDataSource;

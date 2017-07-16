@@ -1,6 +1,5 @@
 function addChat(chatName) {
     var json = {};
-    // засунули данные в JSON
     json["name"] = chatName;
     $.ajax({
         url: 'http://localhost:8080/chats',
