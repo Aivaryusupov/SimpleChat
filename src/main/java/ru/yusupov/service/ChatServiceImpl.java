@@ -1,7 +1,9 @@
 package ru.yusupov.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import ru.yusupov.dao.ChatsDao;
@@ -32,6 +34,9 @@ public class ChatServiceImpl implements ChatService {
     @Autowired
     private SessionsService sessionsService;
 
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
     @Override
     public List<MessageDto> getMessages(String token, int chatId) {
         User user = usersDao.findByToken(token);
@@ -54,15 +59,7 @@ public class ChatServiceImpl implements ChatService {
             model.setText(message.getMessage());
             messagesDao.save(model);
             List<WebSocketSession> sessions = sessionsService.getSessionsOfChat(chatId);
-            for (WebSocketSession session : sessions) {
-                try {
-                    if (session.isOpen()) {
-                        session.sendMessage(new TextMessage(message.getMessage().getBytes()));
-                    }
-                } catch (IOException e) {
-                    throw new IllegalStateException(e);
-                }
-            }
+            messagingTemplate.convertAndSend("/chats/" + chatId, message);
         }
 
     }
@@ -83,9 +80,23 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<ChatDto> getChats() {
         List<Chat> chats = chatsDao.findAll();
-        List<ChatDto> result = chats.
+        return chats.
                 stream().map(chat ->
                 new ChatDto(chat.getId(), chat.getName(), chat.getCreator().getName())).collect(Collectors.toList());
-        return result;
+    }
+
+    @Override
+    @Transactional
+    public void enterChat(String token, int chatId) {
+        Chat chat = chatsDao.findOne(chatId);
+        User user = usersDao.findByToken(token);
+        Optional<User> foundUser = chat.getUsers()
+                .stream()
+                .filter(chatUser -> chatUser.getId() == user.getId())
+                .findFirst();
+        if (!foundUser.isPresent()) {
+            user.getChats().add(chat);
+            usersDao.save(user);
+        }
     }
 }

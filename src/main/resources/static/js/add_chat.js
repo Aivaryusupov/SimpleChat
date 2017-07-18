@@ -13,6 +13,10 @@ function addChat(chatName) {
     })
 }
 
+function toChatList() {
+    window.location = "http://localhost:8080/chat_list.html";
+}
+
 function getCookie(name) {
     var matches = document.cookie.match(new RegExp(
         "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"

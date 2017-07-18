@@ -1,6 +1,12 @@
-function sendMessage(chatId, message) {
+let chatId;
+let token;
+
+window.onload = connect();
+// window.onunload = disconnect();
+
+function sendMessage( message) {
     var json = {};
-    json["message"] = message;
+    json["message"] = message.value;
     $.ajax({
         url: 'http://localhost:8080/chats/' + chatId + '/messages',
         type: 'post',
@@ -11,30 +17,40 @@ function sendMessage(chatId, message) {
         },
         data: JSON.stringify(json)
     })
+    jQuery('#message').val('');
 }
 
 function connect() {
+    chatId = getUrlVars()['id'];
     websocket = new WebSocket("ws://localhost:8080/authHandler");
     websocket.onopen = function (evt) {
-        var token = getCookie("Auth-Token");
+        token = getCookie("Auth-Token");
         if (typeof websocket !== 'undefined') {
-            websocket.send(token + " " + "1" + " " + $('#message').val());
+            websocket.send(token + " " + chatId + " " + $('#message').val());
         } else {
             alert("Not connected.");
         }
-        writeStatus("CONNECTED");
-    };
-
-    websocket.onclose = function (evt) {
-        writeStatus("DISCONNECTED");
     };
 
     websocket.onmessage = function (evt) {
         writeMessage(evt.data);
     };
+}
 
-    websocket.onerror = function (evt) {
-        onError(writeStatus('ERROR:' + evt.data))
+function writeMessage(message) {
+    let select = document.getElementById('chatMessagesList');
+    let messageOption = document.createElement('option');
+    messageOption.value = 0;
+    messageOption.innerHTML = message;
+    select.appendChild(messageOption);
+}
+
+function disconnect() {
+    if (typeof websocket !== 'undefined') {
+        websocket.close();
+        websocket = undefined;
+    } else {
+        alert("Not connected.");
     }
 }
 
@@ -43,4 +59,12 @@ function getCookie(name) {
         "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
     ));
     return matches ? decodeURIComponent(matches[1]) : undefined;
+}
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function (m, key, value) {
+        vars[key] = value;
+    });
+    return vars;
 }

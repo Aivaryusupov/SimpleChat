@@ -12,42 +12,16 @@
 <body>
 <div class="chat_container">
     <div class="form">
-        <button id="connect">Войти в чат</button>
-        <button id="disconnect">Выйти из чата</button>
-        <br/>
-        <input type="text" id="message" value=""/>
+        <input type="text" id="message" placeholder="enter message here..." value=""
+               onkeydown="if (event.keyCode == 13) {sendMessage(
+            document.getElementById('message')
+        ); return false; }"/>
         <button id="send" onclick="sendMessage(
             document.getElementById('message')
         )">Отправить</button>
-        <br/>
-        <textarea id="statusOutput" rows="lO" cols="SO"></textarea>
-        <p>Чат</p>
-        <textarea id="messageOutput" rows="lO" cols="SO"></textarea>
+        <select id="chatMessagesList" size="20" disabled></select>
     </div>
 </div>
-<script language="javascript" type="text/javascript">
-    jQuery(function ($) {
-        var token;
-
-        function writeStatus(message) {
-            $("#statusOutput").val($("#statusOutput").val() + message + '\n');
-        }
-
-        function writeMessage(message) {
-            $('#messageOutput').append(message + '\n');
-        }
-
-        $('#disconnect')
-            .click(function () {
-                if (typeof websocket != 'undefined') {
-                    websocket.close();
-                    websocket = undefined;
-                } else {
-                    alert("Not connected.");
-                }
-            });
-    });
-</script>
 </body>
 </html>
 
