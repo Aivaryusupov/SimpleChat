@@ -59,7 +59,7 @@ public class ChatServiceImpl implements ChatService {
             model.setText(message.getMessage());
             messagesDao.save(model);
             List<WebSocketSession> sessions = sessionsService.getSessionsOfChat(chatId);
-            messagingTemplate.convertAndSend("/chats/" + chatId, message);
+            messagingTemplate.convertAndSend("/topic/chats/" + chatId, message);
         }
 
     }

@@ -6,6 +6,9 @@
             src="http://code.jquery.com/jquery-2.1.1.min.js">
     </script>
     <script language="javascript" type="text/javascript"
+            src="js/functions.js">
+    </script>
+    <script language="javascript" type="text/javascript"
             src="js/add_chat.js">
     </script>
     <link rel="stylesheet" href="css/style.css"/>
@@ -13,7 +16,10 @@
 <body>
 <div class="chat_container">
     <div class="form">
-        <input id="chat_name" type="text" placeholder="Название чата"/>
+        <input id="chat_name" type="text" placeholder="Enter chat name here..." value=""
+               onkeydown="if (event.keyCode == 13) {
+                   addChat(document.getElementById('chat_name').value);
+                   return false;}"/>
         <button id="submit" title="Добавить" onclick="addChat(
             document.getElementById('chat_name').value)">Добавить
         </button>
