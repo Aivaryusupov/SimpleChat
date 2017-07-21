@@ -13,6 +13,6 @@ function addChat(chatName) {
     })
 }
 
-function toChatList() {
+function redirectToChatList() {
     window.location = "http://localhost:8080/chat_list.html";
 }

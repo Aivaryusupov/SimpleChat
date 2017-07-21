@@ -18,15 +18,15 @@
     <div class="form">
         <label for="login">Логин</label>
         <br>
-        <input type="text" id="login" name="login" placeholder="Введите логин" required/>
+        <input type="text" id="login" name="login" placeholder="Введите логин" required autofocus/>
         <br>
         <label for="password">Пароль</label>
         <br>
-        <input type="password" id="password" name="password" placeholder="Введите пароль" required
-        onkeydown="if (event.keyCode == 13) login(
+        <input type="password" id="password" name="password" placeholder="Введите пароль" value="" required
+        onkeydown="if (event.keyCode == 13) {login(
         document.getElementById('login').value,
         document.getElementById('password').value);
-        return false;"/>
+        return false;}"/>
         <br>
         <button id="submit" onclick="login(
         document.getElementById('login').value,

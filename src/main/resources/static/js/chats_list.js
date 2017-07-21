@@ -18,7 +18,11 @@ function getChats() {
                             "Auth-Token": getCookie("Auth-Token")
                         }
                     });
-                    window.location = "/chat.html?id=" + chatId;
+                    if(jQuery('#checkbox').prop("checked")){
+                        window.location = "/stomp_chat.html?id=" + chatId;
+                    }else{
+                        window.location = "/chat.html?id=" + chatId;
+                    }
                 };
                 const cellName = row.insertCell(0);
                 const cellAuthor = row.insertCell(1);
@@ -29,6 +33,6 @@ function getChats() {
     })
 }
 
-function redirect() {
+function redirectToAddChat() {
         window.location = "http://localhost:8080/add_chat.html";
 }
