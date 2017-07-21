@@ -40,7 +40,6 @@ public class PersistenceConfig {
         return adapter;
     }
 
-
     @Bean
     DataSource dataSource() {
         DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();

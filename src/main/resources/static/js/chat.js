@@ -16,7 +16,7 @@ function connect() {
     };
 
     websocket.onmessage = function (evt) {
-        writeMessage(evt.data);
+        writeMessage(JSON.parse(evt.data).from, JSON.parse(evt.data).message);
     };
 }
 

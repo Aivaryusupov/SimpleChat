@@ -44,7 +44,7 @@ public class ChatServiceImpl implements ChatService {
         List<Message> messages = messagesDao.findByAuthorAndChat(user, chat);
         List<MessageDto> result = messages.
                 stream().map(message ->
-                new MessageDto(message.getText())).collect(Collectors.toList());
+                new MessageDto(0, "Aivar", message.getText())).collect(Collectors.toList());
         return result;
     }
 
@@ -58,8 +58,9 @@ public class ChatServiceImpl implements ChatService {
             model.setChat(chat);
             model.setText(message.getMessage());
             messagesDao.save(model);
-            List<WebSocketSession> sessions = sessionsService.getSessionsOfChat(chatId);
+            message.setFrom(user.getName());
             messagingTemplate.convertAndSend("/topic/chats/" + chatId, message);
+            sessionsService.sendToSessions(message, chatId);
         }
 
     }

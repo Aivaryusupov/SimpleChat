@@ -17,12 +17,14 @@
 
 <div class="chat_container">
     <div class="form">
+        <input id="checkbox" class="checkbox" type="checkbox" checked/>
+        <label for="checkbox">Stomp</label>
+        <br>
+        <br>
+        <button id="submit" onclick="redirectToAddChat()">Добавить чат</button>
         <table id="chats_table" width="100%">
             <th>Название</th>
             <th>Создатель</th>
-            <input id="checkbox" class="checkbox" type="checkbox"  checked/>
-            <label for="checkbox">Stomp</label>
-            <button id="submit" onclick="redirectToAddChat()">Добавить чат</button>
         </table>
     </div>
 </div>
