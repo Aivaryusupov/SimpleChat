@@ -48,13 +48,10 @@ function getMessages() {
         headers: {
             'Auth-Token': getCookie("Auth-Token")
         },
-        data: JSON.stringify(json)
-    })
-    for (let i = 0; i < data.length; i++) {
-        let select = document.getElementById('chatMessagesList');
-        let messageOption = document.createElement('option');
-        messageOption.value = 0;
-        messageOption.innerHTML = data[i]["authorName"] + " : " + data[i]["text"];
-        select.appendChild(messageOption);
-    }
+        success: function (data) {
+            $.each(data, function (i, item) {
+                writeMessage(item.from, item.message);
+            })
+        }
+    });
 }

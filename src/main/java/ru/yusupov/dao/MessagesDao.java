@@ -9,4 +9,5 @@ import java.util.List;
 
 public interface MessagesDao extends JpaRepository<Message, Integer> {
     List<Message> findByAuthorAndChat(User user, Chat chat);
+    List<Message> findByChat(Chat chat);
 }

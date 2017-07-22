@@ -97,4 +97,9 @@ public class User {
     public void setChats(List<Chat> chats) {
         this.chats = chats;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -1,5 +1,6 @@
 package ru.yusupov.controllers;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,8 @@ import java.util.List;
 @RestController
 public class UsersController {
 
+    final static Logger logger = Logger.getLogger(UsersController.class);
+
     @Autowired
     private UsersService usersService;
 
@@ -26,6 +29,7 @@ public class UsersController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestHeader("password") String password,
                                          @RequestHeader("login") String login) {
+        logger.debug("This is debug");
         String token = usersService.login(password, login);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Auth-Token", token);

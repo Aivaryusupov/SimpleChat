@@ -8,6 +8,7 @@ import ru.yusupov.models.User;
 public interface UsersDao extends CrudRepository<User, Integer> {
     User findByToken(String token);
     User findByLogin(String login);
+    User findById(int id);
 
     @Modifying
     @Query("update User user set user.token = ?2 where user.id = ?1")

@@ -39,12 +39,12 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public List<MessageDto> getMessages(String token, int chatId) {
-        User user = usersDao.findByToken(token);
         Chat chat = chatsDao.findOne(chatId);
-        List<Message> messages = messagesDao.findByAuthorAndChat(user, chat);
+        List<Message> messages = messagesDao.findByChat(chat);
         List<MessageDto> result = messages.
                 stream().map(message ->
-                new MessageDto(0, "Aivar", message.getText())).collect(Collectors.toList());
+                new MessageDto(message.getChat().getId(), usersDao.findById(message.getAuthor().getId()).getName(),
+                        message.getText())).collect(Collectors.toList());
         return result;
     }
 
@@ -62,7 +62,6 @@ public class ChatServiceImpl implements ChatService {
             messagingTemplate.convertAndSend("/topic/chats/" + chatId, message);
             sessionsService.sendToSessions(message, chatId);
         }
-
     }
 
     @Override
