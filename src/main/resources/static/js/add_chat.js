@@ -1,4 +1,5 @@
 function addChat(chatName) {
+    redirect();
     var json = {};
     json["name"] = chatName;
     $.ajax({

@@ -15,3 +15,7 @@ function login(login, password) {
         }
     })
 }
+
+function redirectToRegistration() {
+    window.location = "http://localhost:8080/registration.html";
+}

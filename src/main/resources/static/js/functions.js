@@ -55,3 +55,9 @@ function getMessages() {
         }
     });
 }
+
+function redirect() {
+    if (!getCookie("Auth-Token")) {
+        window.location = "http://localhost:8080/signin.html";
+    }
+}

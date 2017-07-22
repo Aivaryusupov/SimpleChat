@@ -4,6 +4,7 @@ let token;
 window.onload = connect();
 
 function connect() {
+    redirect();
     chatId = getUrlVars()['id'];
     websocket = new WebSocket("ws://localhost:8080/authHandler");
     websocket.onopen = function (evt) {

@@ -1,4 +1,5 @@
 function getChats() {
+    redirect();
     $.ajax({
         url: 'http://localhost:8080/chats',
         type: 'get',

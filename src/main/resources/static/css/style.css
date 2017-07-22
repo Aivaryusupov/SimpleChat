@@ -183,7 +183,7 @@ td.text-right {
 }
 
 body {
-    background: #76b852; /* fallback for old browsers */
+    background: #76b852;
     background: -webkit-linear-gradient(right, #76b852, #8DC26F);
     background: -moz-linear-gradient(right, #76b852, #8DC26F);
     background: -o-linear-gradient(right, #76b852, #8DC26F);
@@ -254,4 +254,25 @@ body {
 
 .checkbox:focus + label:before {
     box-shadow: 0 0 0 3px rgba(255,255,0,.5);
+}
+
+a {
+    font-size: 14px;
+
+}
+
+a:link {
+    color: #1627ff;
+}
+
+a:visited {
+    color: green;
+}
+
+a:hover {
+    color: hotpink;
+}
+
+a:active {
+    color: blue;
 }
