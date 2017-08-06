@@ -44,6 +44,7 @@ public class TokenAuthFilter extends GenericFilterBean {
                     || page.equals("/registration.html")
                     || page.equals("/stomp_chat.html")
                     || page.equals("/chat_list.html")
+                    || page.equals("/upload.html")
                     || page.equals("/chat.html");
         } else return false;
     }
@@ -51,7 +52,11 @@ public class TokenAuthFilter extends GenericFilterBean {
     private boolean isUnprotectedRestRequest(HttpServletRequest request) {
         return request.getRequestURI().startsWith("/users") && request.getMethod().equals("POST")
                 || request.getRequestURI().startsWith("/login") && request.getMethod().equals("POST")
-                || request.getRequestURI().startsWith("/authHandler") && request.getMethod().equals("GET");
+                || request.getRequestURI().startsWith("/chat") && request.getMethod().equals("GET")
+                || request.getRequestURI().startsWith("/stomp") && request.getMethod().equals("GET")
+                || request.getRequestURI().startsWith("/add_chat") && request.getMethod().equals("GET")
+                || request.getRequestURI().startsWith("/authHandler") && request.getMethod().equals("GET")
+                || request.getRequestURI().startsWith("/files") && request.getMethod().equals("POST");
     }
 
     private boolean isUnprotectedSourcesRequest(HttpServletRequest request) {

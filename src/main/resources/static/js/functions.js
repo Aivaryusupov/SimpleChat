@@ -61,3 +61,11 @@ function redirect() {
         window.location = "http://localhost:8080/signin.html";
     }
 }
+
+function sendFile(file) {
+    var formData = new FormData();
+    formData.append("file", file);
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "http://localhost:8080/files", true);
+    xhr.send(formData);
+}
